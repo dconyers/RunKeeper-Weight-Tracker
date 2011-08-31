@@ -22,6 +22,7 @@ public class StrictModeWrapper {
 					detectDiskWrites().
 					detectNetwork().
 					penaltyLog().
+					penaltyDeath().
 					build()
 					);
 			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().

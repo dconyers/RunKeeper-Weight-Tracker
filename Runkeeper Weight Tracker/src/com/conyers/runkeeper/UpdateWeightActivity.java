@@ -32,16 +32,19 @@ public class UpdateWeightActivity extends Activity {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UpdateWeightActivity.class); 
 	
+	private String accessToken = null;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        accessToken = this.getIntent().getExtras().getString("accessToken");
+        logger.debug("onCreate pulled accessToken of: " + accessToken + " from Intent");
+        
         logger.debug("Top of HelloActivity::onCreate");
         setContentView(R.layout.main);
 
-        new RKConnection();
-
-        
         View _view = findViewById(R.id.WeightLabel);
         // Create an anonymous implementation of OnClickListener
 
@@ -53,21 +56,18 @@ public class UpdateWeightActivity extends Activity {
         
         Button _submitButton = (Button)findViewById(R.id.SubmitButton);
         _submitButton.setOnClickListener(new OnClickListener() {
+        	@Override
             public void onClick(View v) {
                 // do something when the button is clicked
               	updateWeight(R.id.BodyFatTextField, R.id.WeightTextField);
               }
           });
-        
     }
-    
     
     @Override
     protected void onStart() {
         super.onStart();
         logger.debug("onStart() called");
-        
-
         // The activity is about to become visible.
     }
     @Override
@@ -114,8 +114,8 @@ public class UpdateWeightActivity extends Activity {
 	          request.addParser(parser);
 	          // set up the Google headers
 	          HttpHeaders _headers = new HttpHeaders();
-	          logger.debug("Header auth is: " + CredentialRequestActivity.accessToken);
-	          _headers.authorization= "Bearer " + CredentialRequestActivity.accessToken;
+	          logger.debug("Header auth is: " + accessToken);
+	          _headers.authorization= "Bearer " + accessToken;
 	          _headers.accept="application/vnd.com.runkeeper.WeightFeed+json";
 	          request.headers = _headers;
 	        }

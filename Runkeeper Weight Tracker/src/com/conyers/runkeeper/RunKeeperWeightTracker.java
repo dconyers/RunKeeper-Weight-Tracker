@@ -13,7 +13,7 @@ public class RunKeeperWeightTracker extends Application {
 	
 	@Override
 	public void onCreate() {
-		logger.debug("Top of RunKeeperWeighTracker::onCreate()");
+		logger.debug("Top of RunKeeperWeightTracker::onCreate()");
 		super.onCreate();
 		try {
 			StrictModeWrapper.init(this);
