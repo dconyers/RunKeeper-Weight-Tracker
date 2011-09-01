@@ -13,6 +13,6 @@ public class RKWeightData extends GenericJson {
 	public String timestamp;
 
 	@Key
-	public Double weight = -999.9;
+	public Double weight = null;
 	
 }

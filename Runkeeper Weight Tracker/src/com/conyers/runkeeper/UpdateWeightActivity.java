@@ -1,24 +1,12 @@
 package com.conyers.runkeeper;
 
 
-import java.io.IOException;
 import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.conyers.runkeeper.R;
-import com.google.api.client.googleapis.json.JsonCParser;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpHeaders;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson.JacksonFactory;
 
 
 import android.app.Activity;
@@ -100,40 +88,7 @@ public class UpdateWeightActivity extends Activity {
 
 		TextView _text = (TextView)findViewById(R.id.textView1);
 		_text.setText("Test - should be updating weight at time: " + new Date());
-		
-		HttpTransport _transport = new NetHttpTransport();
-		final JsonFactory jsonFactory = new JacksonFactory();
-		
-	    HttpRequestFactory _factory = _transport.createRequestFactory(new HttpRequestInitializer() {
-
-	    	@Override
-	        public void initialize(HttpRequest request) {
-	          // set the parser
-	          JsonCParser parser = new JsonCParser();
-	          parser.jsonFactory = jsonFactory;
-	          request.addParser(parser);
-	          // set up the Google headers
-	          HttpHeaders _headers = new HttpHeaders();
-	          logger.debug("Header auth is: " + accessToken);
-	          _headers.authorization= "Bearer " + accessToken;
-	          _headers.accept="application/vnd.com.runkeeper.WeightFeed+json";
-	          request.headers = _headers;
-	        }
-	      });
-
-	    try {
-	    	HttpRequest _request = _factory.buildGetRequest(new GenericUrl("http://api.runkeeper.com/weight"));
-	    	logger.debug("request is: " + _request.headers.toString());
-	    	HttpResponse _response = _request.execute();
-	    	logger.debug("response: " + _response.parseAsString());
-	    } catch (IOException pIOE) {
-	    	logger.error("Got IOException", pIOE);
-	    }
-
-	    
-
+		GetRKWeightDataAsyncTask _task = new GetRKWeightDataAsyncTask(accessToken);
+		_task.execute(1);
 	}
-
-
-	
 }

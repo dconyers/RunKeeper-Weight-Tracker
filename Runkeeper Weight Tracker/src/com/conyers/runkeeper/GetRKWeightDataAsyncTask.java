@@ -28,16 +28,18 @@ AsyncTask<Integer, String, String> {
 
 	private String accessToken;
 
+	HttpRequestFactory factory;
+	
 	protected GetRKWeightDataAsyncTask(String pAccessToken) {
 		accessToken = pAccessToken;
 	}
+	
 	@Override
-	protected String doInBackground(Integer... params) {
-
+	protected void onPreExecute() {
 		HttpTransport _transport = new NetHttpTransport();
 		final JsonFactory jsonFactory = new JacksonFactory();
 
-		HttpRequestFactory _factory = _transport.createRequestFactory(new HttpRequestInitializer() {
+		factory = _transport.createRequestFactory(new HttpRequestInitializer() {
 
 			@Override
 			public void initialize(HttpRequest request) {
@@ -62,9 +64,13 @@ AsyncTask<Integer, String, String> {
 				request.headers = _headers;
 			}
 		});
-
+		
+	}
+	
+	@Override
+	protected String doInBackground(Integer... params) {
 		try {
-			HttpRequest _request = _factory.buildGetRequest(new GenericUrl("http://api.runkeeper.com/weight"));
+			HttpRequest _request = factory.buildGetRequest(new GenericUrl("http://api.runkeeper.com/weight"));
 			logger.debug("request is: " + _request.headers.toString());
 			HttpResponse _response = _request.execute();
 			WeightFeed _return =_response.parseAs(WeightFeed.class);
@@ -74,7 +80,7 @@ AsyncTask<Integer, String, String> {
 				logger.debug("data from: " + _data.timestamp + " is: " + _data.uri);
 				
 				//parser.contentType="application/vnd.com.runkeeper.weight+json;charset=ISO-8859-1";
-				_request = _factory.buildGetRequest(new GenericUrl("http://api.runkeeper.com" + _data.uri));
+				_request = factory.buildGetRequest(new GenericUrl("http://api.runkeeper.com" + _data.uri));
 				_request.headers.accept = "application/vnd.com.runkeeper.Weight+json";
 				logger.debug("Request is: " + _request.headers.toString());
 				_response = _request.execute();
