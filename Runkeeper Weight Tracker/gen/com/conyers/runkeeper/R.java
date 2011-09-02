@@ -17,6 +17,7 @@ public final class R {
         public static final int BodyFatLabel=0x7f060004;
         public static final int BodyFatTextField=0x7f060005;
         public static final int LoginButton=0x7f060000;
+        public static final int Logout=0x7f060009;
         public static final int ResponseTextView=0x7f060001;
         public static final int Settings=0x7f060008;
         public static final int SubmitButton=0x7f060006;
@@ -32,14 +33,13 @@ public final class R {
         public static final int menu=0x7f050000;
     }
     public static final class string {
-        public static final int BodyFatLabel=0x7f040002;
-        public static final int LoginButton=0x7f040007;
-        public static final int PasswordLabel=0x7f040006;
-        public static final int ResponseText=0x7f040008;
-        public static final int Submit=0x7f040004;
-        public static final int UserNameLabel=0x7f040005;
-        public static final int WeightLabel=0x7f040003;
-        public static final int app_name=0x7f040001;
-        public static final int hello=0x7f040000;
+        public static final int BodyFatLabel=0x7f040001;
+        public static final int LoginButton=0x7f040006;
+        public static final int PasswordLabel=0x7f040005;
+        public static final int ResponseText=0x7f040007;
+        public static final int Submit=0x7f040003;
+        public static final int UserNameLabel=0x7f040004;
+        public static final int WeightLabel=0x7f040002;
+        public static final int app_name=0x7f040000;
     }
 }

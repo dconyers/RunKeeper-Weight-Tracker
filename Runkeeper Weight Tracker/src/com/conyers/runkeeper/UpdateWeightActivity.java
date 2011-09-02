@@ -11,8 +11,12 @@ import com.conyers.runkeeper.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.CookieManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -83,6 +87,32 @@ public class UpdateWeightActivity extends Activity {
         // The activity is about to be destroyed.
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu pMenu) {
+    	
+    
+    	super.onCreateOptionsMenu(pMenu);
+    	
+    	MenuInflater _inflater = getMenuInflater();
+    	_inflater.inflate(R.menu.menu, pMenu);
+    	
+    	MenuItem _menuItem = (MenuItem)pMenu.findItem(R.id.Logout);
+    	_menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				logger.trace("onMenuItem Click for Logout button");
+				
+		        CookieManager cookieManager = CookieManager.getInstance();
+		        cookieManager.removeSessionCookie();      
+
+				return true;
+			}
+    	});
+    	
+    	return true;
+    }
+    
     // Private Methods
 	private void updateWeight(int bodyfattextfield, int weighttextfield) {
 

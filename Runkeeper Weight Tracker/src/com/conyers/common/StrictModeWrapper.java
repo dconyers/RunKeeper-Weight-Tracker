@@ -22,13 +22,13 @@ public class StrictModeWrapper {
 					detectDiskWrites().
 					detectNetwork().
 					penaltyLog().
-					penaltyDeath().
+					//penaltyDeath().
 					build()
 					);
 			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().
 					detectLeakedSqlLiteObjects().
 					penaltyLog().
-					penaltyDeath().
+					//penaltyDeath().
 					build()
 					);
 		}

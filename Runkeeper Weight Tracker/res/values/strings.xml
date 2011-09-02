@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, HelloActivity!</string>
-    <string name="app_name">Hello</string>
+    <string name="app_name">RunKeeper Weight Tracker</string>
     <string name="BodyFatLabel">Body Fat</string>
     <string name="WeightLabel">Weight</string>
     <string name="Submit">Submit</string>

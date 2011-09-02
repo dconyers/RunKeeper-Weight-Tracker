@@ -62,9 +62,20 @@ public class CredentialRequestActivity extends Activity {
         
         /* WebViewClient must be set BEFORE calling loadUrl! */  
         _webView.setWebViewClient(new WebViewClient() {  
-
+        	
+        	@Override
+        	public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
+        		logger.debug("On page started for url: " + url);
+        	}
+        	
+        	@Override
+        	public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        		logger.error("Got onReceivedError!!!!");
+        	}
+        	
         	@Override  
-            public void onPageFinished(WebView view, String pURL)  {  
+            public void onPageFinished(WebView view, String pURL)  {
+        		super.onPageFinished(view, pURL);
         		logger.debug("top of onPageFinished for WebView w/URL: " + pURL);
             	
         		if (code != null) {
@@ -89,10 +100,9 @@ public class CredentialRequestActivity extends Activity {
 			private String extractCodeFromUrl(String url) {
 				return url.substring(REDIRECT_URI.length()+7,url.length());
 			}  
-        });  
-        
+        });
+
         _webView.loadUrl(_resultURL);		
-        logger.debug("after loadURL with: " + _resultURL);
 
 		return;
 	}
