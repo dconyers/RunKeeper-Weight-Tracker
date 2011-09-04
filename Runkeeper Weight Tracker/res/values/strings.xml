@@ -8,4 +8,6 @@
     <string name="PasswordLabel">Password</string>
     <string name="LoginButton">Login</string>
     <string name="ResponseText"></string>
+    <string name="SampleDate">1/1/70 12:00 AM</string>
+    <string name="SampleText">150 Pounds</string>
 </resources>

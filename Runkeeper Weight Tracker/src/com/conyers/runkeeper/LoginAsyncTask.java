@@ -10,7 +10,6 @@ import com.google.api.client.auth.oauth2.draft10.AccessTokenRequest.Authorizatio
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson.JacksonFactory;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -53,8 +52,8 @@ public class LoginAsyncTask extends AsyncTask<String, String, String> {
 	protected void onPostExecute(String pResult) {
 		logger.trace("Top of LoginAsyncTask::onPostExecute with value of: " + pResult);
 		publishProgress("onPostExecute");
-		Intent _intent = new Intent(context,UpdateWeightActivity.class);
-		_intent.setComponent(new ComponentName(UpdateWeightActivity.class.getPackage().getName(), UpdateWeightActivity.class.getName()));
+		Intent _intent = new Intent(context,ListWeightActivity.class);
+		//_intent.setComponent(new ComponentName(UpdateWeightActivity.class.getPackage().getName(), UpdateWeightActivity.class.getName()));
 		_intent.putExtra("accessToken", pResult);
 		context.startActivity(_intent);
 	}

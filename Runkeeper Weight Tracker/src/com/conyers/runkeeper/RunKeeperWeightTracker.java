@@ -11,6 +11,17 @@ public class RunKeeperWeightTracker extends Application {
 
 	private static final Logger logger = LoggerFactory.getLogger(RunKeeperWeightTracker.class);
 	
+	private static RunKeeperWeightTracker instance = null;
+	
+	public RunKeeperWeightTracker() {
+		super();
+		instance = this;
+	}
+	
+	public static RunKeeperWeightTracker getInstance() {
+		return instance;
+	}
+	
 	@Override
 	public void onCreate() {
 		logger.debug("Top of RunKeeperWeightTracker::onCreate()");
@@ -21,4 +32,6 @@ public class RunKeeperWeightTracker extends Application {
 			logger.error("Failed to init StrictModeWrapper", pThrowable);
 		}
 	}
+	
+	
 }

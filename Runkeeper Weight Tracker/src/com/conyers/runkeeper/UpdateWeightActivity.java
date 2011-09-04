@@ -10,6 +10,7 @@ import com.conyers.runkeeper.R;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -89,8 +91,7 @@ public class UpdateWeightActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu pMenu) {
-    	
-    
+    	  
     	super.onCreateOptionsMenu(pMenu);
     	
     	MenuInflater _inflater = getMenuInflater();
@@ -104,8 +105,13 @@ public class UpdateWeightActivity extends Activity {
 				logger.trace("onMenuItem Click for Logout button");
 				
 		        CookieManager cookieManager = CookieManager.getInstance();
-		        cookieManager.removeSessionCookie();      
-
+		        cookieManager.removeSessionCookie();   
+		        cookieManager.removeAllCookie();
+		        CookieSyncManager.getInstance().sync();
+		        
+				Intent _intent = new Intent(UpdateWeightActivity.this,CredentialRequestActivity.class);
+				startActivity(_intent);
+		        
 				return true;
 			}
     	});
@@ -118,7 +124,8 @@ public class UpdateWeightActivity extends Activity {
 
 		TextView _text = (TextView)findViewById(R.id.textView1);
 		_text.setText("Test - should be updating weight at time: " + new Date());
-		GetRKWeightDataAsyncTask _task = new GetRKWeightDataAsyncTask(accessToken);
-		_task.execute(1);
+		// TODO - this needs to be handled differently here.
+		//GetRKWeightDataAsyncTask _task = new GetRKWeightDataAsyncTask(accessToken);
+		//_task.execute(1);
 	}
 }

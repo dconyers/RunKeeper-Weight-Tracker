@@ -10,6 +10,8 @@ import com.google.api.client.auth.oauth2.draft10.AuthorizationRequestUrl;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -66,18 +68,22 @@ public class CredentialRequestActivity extends Activity {
         	@Override
         	public void onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
         		logger.debug("On page started for url: " + url);
+        		CookieManager _cookieManager = CookieManager.getInstance();
+        		logger.debug("On Page started - Cookie is: " + _cookieManager.getCookie("runkeeper.com"));
         	}
         	
         	@Override
         	public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-        		logger.error("Got onReceivedError!!!!");
+        		logger.error("Got onReceivedError. Code: " + errorCode + " Description: " + description + " Failuring URL: " + failingUrl);
         	}
         	
         	@Override  
             public void onPageFinished(WebView view, String pURL)  {
         		super.onPageFinished(view, pURL);
         		logger.debug("top of onPageFinished for WebView w/URL: " + pURL);
-            	
+        		CookieManager _cookieManager = CookieManager.getInstance();
+        		CookieSyncManager.getInstance().sync();
+        		logger.debug("On Page Finished - Cookie is: " + _cookieManager.getCookie("runkeeper.com"));
         		if (code != null) {
         			logger.debug("already got code, returning.");
         			return;
