@@ -20,10 +20,6 @@ public class CredentialRequestActivity extends Activity {
 
 	private static final Logger logger = LoggerFactory.getLogger(CredentialRequestActivity.class);
 	
-	public static final String AUTH_URL = "https://runkeeper.com/apps/authorize";
-	public static final String TOKEN_URL = "https://runkeeper.com/apps/token";
-	public static final String CLIENT_ID = "7752fbae004c452c9482ecad693d4381";
-	public static final String CLIENT_SECRET = "f87c1ef1f4f44de9ad2b92946fa896d0";
 	public static final String REDIRECT_URI = "http://localhost";
 	
 	private String code = null;
@@ -51,7 +47,7 @@ public class CredentialRequestActivity extends Activity {
 		TextView _responseTextView = (TextView)findViewById(R.id.ResponseTextView);
 		_responseTextView.setText("Attempting Login");
 		
-		AuthorizationRequestUrl _requestURL = new AuthorizationRequestUrl(AUTH_URL, CLIENT_ID);
+		AuthorizationRequestUrl _requestURL = new AuthorizationRequestUrl(Constants.AUTHORIZE_URL, Constants.CONSUMER_KEY);
 		_requestURL.redirectUri = REDIRECT_URI;
 		
 		WebView _webView = new WebView(this);

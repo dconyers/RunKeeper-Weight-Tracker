@@ -8,7 +8,8 @@ public class Constants {
 
 	public static final String SCOPE 			= "https://runkeeper.com";
 	public static final String REQUEST_URL 		= "https://runkeeper.com";
-	public static final String ACCESS_URL 		= "https://runkeeper.com/apps/token";  
+	public static final String ACCESS_URL 		= "https://runkeeper.com/apps/token";
+	public static final String API_URL			= "http://api.runkeeper.com/";
 	public static final String AUTHORIZE_URL 	= "https://runkeeper.com/apps/authorize";
 
 	public static final String ENCODING 		= "UTF-8";

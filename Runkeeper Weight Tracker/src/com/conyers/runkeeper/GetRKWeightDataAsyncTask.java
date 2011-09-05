@@ -10,16 +10,9 @@ import org.slf4j.LoggerFactory;
 import com.conyers.runkeeper.json.RKWeightData;
 import com.conyers.runkeeper.json.WeightFeed;
 import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.http.json.JsonHttpParser;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson.JacksonFactory;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -35,48 +28,14 @@ AsyncTask<Integer, String, RKWeightData[]> {
 
 	private static final Logger logger = LoggerFactory.getLogger(GetRKWeightDataAsyncTask.class);
 
-	private String accessToken;
-
-	HttpRequestFactory factory;
-	
 	ListActivity listActivity = null;
 	
-	protected GetRKWeightDataAsyncTask(String pAccessToken, ListActivity pListActivity) {
-		accessToken = pAccessToken;
+	protected GetRKWeightDataAsyncTask(ListActivity pListActivity) {
 		listActivity = pListActivity;
 	}
 	
 	@Override
 	protected void onPreExecute() {
-		HttpTransport _transport = new NetHttpTransport();
-		final JsonFactory jsonFactory = new JacksonFactory();
-
-		factory = _transport.createRequestFactory(new HttpRequestInitializer() {
-
-			@Override
-			public void initialize(HttpRequest request) {
-				// set the parser
-
-				JsonHttpParser parser = new JsonHttpParser();
-				parser.contentType="application/vnd.com.runkeeper.weightfeed+json;charset=ISO-8859-1";
-				parser.jsonFactory = jsonFactory;
-				request.addParser(parser);
-				
-				parser = new JsonHttpParser();
-				parser.contentType="application/vnd.com.runkeeper.weight+json;charset=ISO-8859-1";
-				parser.jsonFactory = jsonFactory;
-				request.addParser(parser);
-
-				
-				// set up the Google headers
-				HttpHeaders _headers = new HttpHeaders();
-				logger.debug("Header auth is: " + accessToken);
-				_headers.authorization= "Bearer " + accessToken;
-				_headers.accept="application/vnd.com.runkeeper.WeightFeed+json";
-				request.headers = _headers;
-			}
-		});
-		
 	}
 	
 	@Override
@@ -85,12 +44,14 @@ AsyncTask<Integer, String, RKWeightData[]> {
 		listActivity.setListAdapter(new MySimpleArrayAdapter(listActivity, pWeightData));
 	}
 	
-	
-	
 	@Override
 	protected RKWeightData[] doInBackground(Integer... params) {
 		try {
-			HttpRequest _request = factory.buildGetRequest(new GenericUrl("http://api.runkeeper.com/weight"));
+
+			HttpRequestFactory _factory;
+
+			_factory = RunKeeperWeightTracker.getInstance().getHttpRequestFactory();		
+			HttpRequest _request = _factory.buildGetRequest(new GenericUrl(Constants.API_URL + "/weight"));
 			logger.debug("request is: " + _request.headers.toString());
 			HttpResponse _response = _request.execute();
 			WeightFeed _return =_response.parseAs(WeightFeed.class);
@@ -100,9 +61,7 @@ AsyncTask<Integer, String, RKWeightData[]> {
 			
 			for (RKWeightData _data : _return.items) {
 				logger.debug("data from: " + _data.timestamp + " is: " + _data.uri);
-				
-				//parser.contentType="application/vnd.com.runkeeper.weight+json;charset=ISO-8859-1";
-				_request = factory.buildGetRequest(new GenericUrl("http://api.runkeeper.com" + _data.uri));
+				_request = _factory.buildGetRequest(new GenericUrl(Constants.API_URL + _data.uri));
 				_request.headers.accept = "application/vnd.com.runkeeper.Weight+json";
 				logger.debug("Request is: " + _request.headers.toString());
 				_response = _request.execute();

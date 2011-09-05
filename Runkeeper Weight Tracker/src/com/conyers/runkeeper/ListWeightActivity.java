@@ -21,17 +21,12 @@ public class ListWeightActivity extends ListActivity {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ListWeightActivity.class); 
 	
-	private String accessToken = null;
-	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        accessToken = this.getIntent().getExtras().getString("accessToken");
-        logger.debug("onCreate pulled accessToken of: " + accessToken + " from Intent");
-
-		GetRKWeightDataAsyncTask _task = new GetRKWeightDataAsyncTask(accessToken, this);
+		GetRKWeightDataAsyncTask _task = new GetRKWeightDataAsyncTask(this);
 		_task.execute(1);
 
     }

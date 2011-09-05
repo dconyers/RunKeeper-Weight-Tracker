@@ -124,8 +124,5 @@ public class UpdateWeightActivity extends Activity {
 
 		TextView _text = (TextView)findViewById(R.id.textView1);
 		_text.setText("Test - should be updating weight at time: " + new Date());
-		// TODO - this needs to be handled differently here.
-		//GetRKWeightDataAsyncTask _task = new GetRKWeightDataAsyncTask(accessToken);
-		//_task.execute(1);
 	}
 }

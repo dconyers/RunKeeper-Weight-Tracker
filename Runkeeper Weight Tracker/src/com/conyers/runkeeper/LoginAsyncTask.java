@@ -52,9 +52,8 @@ public class LoginAsyncTask extends AsyncTask<String, String, String> {
 	protected void onPostExecute(String pResult) {
 		logger.trace("Top of LoginAsyncTask::onPostExecute with value of: " + pResult);
 		publishProgress("onPostExecute");
+		
 		Intent _intent = new Intent(context,ListWeightActivity.class);
-		//_intent.setComponent(new ComponentName(UpdateWeightActivity.class.getPackage().getName(), UpdateWeightActivity.class.getName()));
-		_intent.putExtra("accessToken", pResult);
 		context.startActivity(_intent);
 	}
 	
@@ -64,10 +63,11 @@ public class LoginAsyncTask extends AsyncTask<String, String, String> {
 		publishProgress("Top of login()");
 
 		try {
-		AuthorizationCodeGrant _grantRequest = new AuthorizationCodeGrant(new NetHttpTransport(), new JacksonFactory(), CredentialRequestActivity.TOKEN_URL, CredentialRequestActivity.CLIENT_ID, CredentialRequestActivity.CLIENT_SECRET, code, CredentialRequestActivity.REDIRECT_URI);
+		AuthorizationCodeGrant _grantRequest = new AuthorizationCodeGrant(new NetHttpTransport(), new JacksonFactory(), Constants.ACCESS_URL, Constants.CONSUMER_KEY, Constants.CONSUMER_SECRET, code, CredentialRequestActivity.REDIRECT_URI);
 		AccessTokenResponse _accessTokenResponse = _grantRequest.execute();
 		String _accessToken = _accessTokenResponse.accessToken;
 		logger.debug("Received Access Token: " + _accessToken);
+		RunKeeperWeightTracker.getInstance().setAccessToken(_accessToken);
 		return _accessToken;
 	      
 	} catch (IOException pIOE) {
