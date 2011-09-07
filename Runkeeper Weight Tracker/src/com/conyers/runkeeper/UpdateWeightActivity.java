@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.conyers.runkeeper.R;
+import com.conyers.runkeeper.json.RKWeightData;
 
 
 import android.app.Activity;
@@ -20,21 +21,17 @@ import android.view.View.OnClickListener;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class UpdateWeightActivity extends Activity {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UpdateWeightActivity.class); 
 	
-	private String accessToken = null;
-	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        accessToken = this.getIntent().getExtras().getString("accessToken");
-        logger.debug("onCreate pulled accessToken of: " + accessToken + " from Intent");
         
         logger.debug("Top of HelloActivity::onCreate");
         setContentView(R.layout.main);
@@ -123,6 +120,16 @@ public class UpdateWeightActivity extends Activity {
 	private void updateWeight(int bodyfattextfield, int weighttextfield) {
 
 		TextView _text = (TextView)findViewById(R.id.textView1);
-		_text.setText("Test - should be updating weight at time: " + new Date());
+		_text.setText("Test - should be updatin weight at time: " + new Date() + System.getProperty("line.separator"));
+		
+		EditText _editText = (EditText)findViewById(R.id.WeightTextField);
+		Double _value = Double.parseDouble(_editText.getText().toString());
+		_text.append("Updating with weight of: " + _value + System.getProperty("line.separator"));
+		
+		RKWeightData _newData = new RKWeightData(_value, new Date());
+		_text.append("Created RKWeightData of: " + _newData + System.getProperty("line.separator"));
+		
+		UpdateWeightDataAsyncTask _task = new UpdateWeightDataAsyncTask(this);
+		_task.execute(_newData);
 	}
 }

@@ -58,6 +58,20 @@ public class ListWeightActivity extends ListActivity {
 				return true;
 			}
     	});
+
+    	_menuItem = (MenuItem)pMenu.findItem(R.id.AddWeight);
+    	_menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				logger.trace("onMenuItem Click for AddWeight button");
+				
+				Intent _intent = new Intent(ListWeightActivity.this,UpdateWeightActivity.class);
+				startActivity(_intent);
+		        
+				return true;
+			}
+    	});
     	
     	return true;
     }

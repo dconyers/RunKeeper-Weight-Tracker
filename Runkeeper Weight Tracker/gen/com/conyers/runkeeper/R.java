@@ -14,6 +14,7 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
+        public static final int AddWeight=0x7f06000c;
         public static final int BodyFatLabel=0x7f060004;
         public static final int BodyFatTextField=0x7f060005;
         public static final int DateTextView=0x7f060008;
@@ -36,6 +37,7 @@ public final class R {
         public static final int menu=0x7f050000;
     }
     public static final class string {
+        public static final int AddWeight=0x7f04000a;
         public static final int BodyFatLabel=0x7f040001;
         public static final int LoginButton=0x7f040006;
         public static final int PasswordLabel=0x7f040005;

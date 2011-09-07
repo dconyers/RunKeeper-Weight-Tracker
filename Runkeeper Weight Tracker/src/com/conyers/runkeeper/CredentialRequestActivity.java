@@ -31,12 +31,12 @@ public class CredentialRequestActivity extends Activity {
 	
         logger.debug("Top of CredentialRequestActivity::onCreate");
         setContentView(R.layout.credential_request_activity);
-        
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		setContentView(R.layout.credential_request_activity);
 		logger.trace("Top of CredentialRequestActivity::onResume");
 		processLoginRequest();
 	}
@@ -45,6 +45,10 @@ public class CredentialRequestActivity extends Activity {
 		
 		logger.trace("Top of processLoginRequest");
 		TextView _responseTextView = (TextView)findViewById(R.id.ResponseTextView);
+		if (_responseTextView == null) {
+			logger.error("Failed to get responseTextView reference in processLoginRequest");
+			throw new IllegalStateException("How did this happen?");
+		}
 		_responseTextView.setText("Attempting Login");
 		
 		AuthorizationRequestUrl _requestURL = new AuthorizationRequestUrl(Constants.AUTHORIZE_URL, Constants.CONSUMER_KEY);
